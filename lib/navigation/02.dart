@@ -1,76 +1,89 @@
 import 'package:flutter/material.dart';
 
-/// Flutter code sample for [Drawer].
+void main() {
+  runApp(MyApp());
+}
 
-void main() => runApp(const DrawerApp());
-
-class DrawerApp extends StatelessWidget {
-  const DrawerApp({super.key});
-
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(useMaterial3: true),
-      home: const DrawerExample(),
+      title: 'MKVPN GUI',
+      // Define initial route and named routes
+      initialRoute: '/',
+      routes: {
+        '/': (context) => Dashboard(),
+        '/config': (context) => Config(),
+      },
     );
   }
 }
 
-class DrawerExample extends StatefulWidget {
-  const DrawerExample({super.key});
-
+// Drawer widget that will appear on all pages
+class AppDrawer extends StatelessWidget {
   @override
-  State<DrawerExample> createState() => _DrawerExampleState();
+  Widget build(BuildContext context) {
+    return Drawer(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: <Widget>[
+          DrawerHeader(
+            decoration: BoxDecoration(
+              color: Colors.blue,
+            ),
+            child: Text(
+              'MKVPN',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 24,
+              ),
+            ),
+          ),
+          ListTile(
+            leading: Icon(Icons.settings),
+            title: Text('Dashboard'),
+            onTap: () {
+              Navigator.pushNamed(context, '/'); // Navigate to Home
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.settings),
+            title: Text('Config'),
+            onTap: () {
+              Navigator.pushNamed(context, '/config'); // Navigate to Page 1
+            },
+          ),
+        ],
+      ),
+    );
+  }
 }
 
-class _DrawerExampleState extends State<DrawerExample> {
-  String selectedPage = '';
-
+class Dashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Drawer'),
+        title: Text('Dashboard'),
       ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
-              child: Text(
-                'Drawer Header',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                ),
-              ),
-            ),
-            ListTile(
-              leading: const Icon(Icons.settings),
-              title: const Text('Dashboard'),
-              onTap: () {
-                setState(() {
-                  selectedPage = 'dashboard';
-                });
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.settings),
-              title: const Text('Config'),
-              onTap: () {
-                setState(() {
-                  selectedPage = 'config';
-                });
-              },
-            ),
-          ],
-        ),
-      ),
+      drawer: AppDrawer(), // Adding the Drawer
       body: Center(
-        child: Text('Page: $selectedPage'),
+        child: Text('Welcome to the Dashboard', style: TextStyle(fontSize: 24)),
+      ),
+    );
+  }
+}
+
+class Config extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Config'),
+      ),
+      drawer: AppDrawer(), // Drawer available on every page
+      body: Center(
+        child: Text('Welcome to Config', style: TextStyle(fontSize: 24)),
       ),
     );
   }

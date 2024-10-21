@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 void main() {
   runApp(MyApp());
@@ -8,105 +10,85 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Drawer Navigation Example',
-      // Define initial route and named routes
-      initialRoute: '/',
-      routes: {
-        '/': (context) => HomePage(),
-        '/page1': (context) => Page1(),
-        '/page2': (context) => Page2(),
-      },
+      home: PageXray(),
     );
   }
 }
 
-class HomePage extends StatelessWidget {
+class MyApi {
+  Future<Map<String, dynamic>> getApiData(String apiUrl) async {
+    try {
+      final response = await http.get(Uri.parse(apiUrl));
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        return data;
+      } else {
+        throw Exception(
+            'Failed to load data. Status Code: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Error occurred: $e');
+    }
+  }
+}
+
+class PageXray extends StatefulWidget {
+  @override
+  _PageXrayState createState() => _PageXrayState();
+}
+
+class _PageXrayState extends State<PageXray> {
+  late Future<Map<String, dynamic>> _apiData;
+
+  @override
+  void initState() {
+    super.initState();
+    String url =
+        'http://0.0.0.0:8000/fd051ac1-e342-4631-968d-db3f19b575e7/xray/server/list';
+    _apiData = MyApi().getApiData(url);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home Page'),
+        title: Text('API Data List'),
       ),
-      drawer: AppDrawer(), // Adding the Drawer
-      body: Center(
-        child: Text('Welcome to the Home Page', style: TextStyle(fontSize: 24)),
-      ),
-    );
-  }
-}
-
-class Page1 extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Page 1'),
-      ),
-      drawer: AppDrawer(), // Drawer available on every page
-      body: Center(
-        child: Text('Welcome to Page 1', style: TextStyle(fontSize: 24)),
-      ),
-    );
-  }
-}
-
-class Page2 extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Page 2'),
-      ),
-      drawer: AppDrawer(), // Drawer available on every page
-      body: Center(
-        child: Text('Welcome to Page 2', style: TextStyle(fontSize: 24)),
-      ),
-    );
-  }
-}
-
-// Drawer widget that will appear on all pages
-class AppDrawer extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Drawer(
-      child: ListView(
-        padding: EdgeInsets.zero,
-        children: <Widget>[
-          DrawerHeader(
-            decoration: BoxDecoration(
-              color: Colors.blue,
-            ),
-            child: Text(
-              'Drawer Navigation',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 24,
-              ),
-            ),
-          ),
-          ListTile(
-            leading: Icon(Icons.home),
-            title: Text('Home'),
-            onTap: () {
-              Navigator.pushNamed(context, '/'); // Navigate to Home
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.pageview),
-            title: Text('Page 1'),
-            onTap: () {
-              Navigator.pushNamed(context, '/page1'); // Navigate to Page 1
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.pages),
-            title: Text('Page 2'),
-            onTap: () {
-              Navigator.pushNamed(context, '/page2'); // Navigate to Page 2
-            },
-          ),
-        ],
+      body: FutureBuilder<Map<String, dynamic>>(
+        future: _apiData,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          } else if (snapshot.hasData) {
+            final data = snapshot.data!;
+            return ListView(
+              padding: EdgeInsets.all(16.0),
+              children: [
+                ListTile(
+                  title: Text('Version: ${data["version"]}',
+                      style: TextStyle(fontSize: 20)),
+                ),
+                ListTile(
+                  title: Text('Config URL: ${data["config_url"]}',
+                      style: TextStyle(fontSize: 20)),
+                ),
+                ListTile(
+                  title: Text('API Host: ${data["api_host"]}',
+                      style: TextStyle(fontSize: 20)),
+                ),
+                ListTile(
+                  title: Text('API Port: ${data["api_port"]}',
+                      style: TextStyle(fontSize: 20)),
+                ),
+              ],
+            );
+          } else {
+            return Center(child: Text('No data available'));
+          }
+        },
       ),
     );
   }

@@ -8,7 +8,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'MKVPN GUI',
+      title: 'Drawer',
       // Define initial route and named routes
       initialRoute: '/',
       routes: {

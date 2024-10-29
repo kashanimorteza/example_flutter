@@ -50,13 +50,17 @@ class CounterProvider with ChangeNotifier {
     init();
   }
 
-  void init() async {
-    _count = _count + 1;
+  void init() {
+    increase();
   }
 
   void getCount() async {
-    _count = _count + 1;
+    increase();
     this.notify();
+  }
+
+  void increase() async {
+    _count = _count + 1;
   }
 
   void notify() {

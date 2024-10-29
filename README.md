@@ -86,6 +86,7 @@
 	05 : Provider_Single
 	06 : Provider_Multi
 	07 : Provider_Consumer
+	08 : 
 
 #### API
 	01 : Simple api without asynchronous

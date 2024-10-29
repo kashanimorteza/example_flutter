@@ -90,8 +90,9 @@
 	09 : Provider with initialization and Asys
 #### API
 	01 : Simple api without asynchronous
-	02 : Simple api with asynchronous
-	03 : Api with asynchronous and class
+	02 : Simple api with asynchronous 1
+	03 : Simple api with asynchronous 2
+	04 : Api with asynchronous and class
 
 
 <!---------------------------------------[Question]-->

@@ -2,9 +2,9 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 void main() {
-  String url =
-      'http://0.0.0.0:8000/fd051ac1-e342-4631-968d-db3f19b575e7/schema';
-
+  var url = 'http://0.0.0.0:8000/fd051ac1-e342-4631-968d-db3f19b575e7';
+  var route = 'schema';
+  url = '${url}/${route}';
   getData(url, (data) {
     if (data != null) {
       print(data);
@@ -24,14 +24,3 @@ void getData(String apiUrl, Function(dynamic) onResponse) {
     onResponse(null);
   });
 }
-
-
-  // Future<List<dynamic>> fetchApiOutput(String route) async {
-  //   url = '${this.url}/${route}';
-  //   final response = await http.get(Uri.parse(url));
-  //   if (response.statusCode == 200) {
-  //     return jsonDecode(response.body);
-  //   } else {
-  //     throw Exception('Failed to load data');
-  //   }
-  // }

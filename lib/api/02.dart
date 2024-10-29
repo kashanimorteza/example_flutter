@@ -2,8 +2,9 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 void main() async {
-  String url =
-      'http://0.0.0.0:8000/fd051ac1-e342-4631-968d-db3f19b575e7/schema';
+  var url = 'http://0.0.0.0:8000/fd051ac1-e342-4631-968d-db3f19b575e7';
+  var route = 'schema';
+  url = '${url}/${route}';
   var data = await getData(url);
   print(data);
 }

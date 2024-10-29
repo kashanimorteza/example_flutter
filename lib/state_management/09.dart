@@ -51,7 +51,9 @@ class CounterProvider with ChangeNotifier {
   }
 
   void init() {
-    increase();
+    increase().whenComplete(() {
+      print(_count);
+    });
   }
 
   void getCount() async {
@@ -59,7 +61,7 @@ class CounterProvider with ChangeNotifier {
     this.notify();
   }
 
-  void increase() async {
+  Future increase() async {
     _count = _count + 1;
   }
 

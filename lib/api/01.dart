@@ -24,3 +24,14 @@ void getData(String apiUrl, Function(dynamic) onResponse) {
     onResponse(null);
   });
 }
+
+
+  // Future<List<dynamic>> fetchApiOutput(String route) async {
+  //   url = '${this.url}/${route}';
+  //   final response = await http.get(Uri.parse(url));
+  //   if (response.statusCode == 200) {
+  //     return jsonDecode(response.body);
+  //   } else {
+  //     throw Exception('Failed to load data');
+  //   }
+  // }

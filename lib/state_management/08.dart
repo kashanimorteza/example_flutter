@@ -35,12 +35,6 @@ class MyApp extends StatelessWidget {
 
     final prv = Provider.of<CounterProvider>(context, listen: true);
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      print(prv.count);
-      prv.increment();
-      print(prv.count);
-    });
-
     return MaterialApp(
         home: Scaffold(
       body: Column(children: [
@@ -61,6 +55,16 @@ class MyApp extends StatelessWidget {
 class CounterProvider with ChangeNotifier {
   int _count = 0;
   int get count => _count;
+
+  CounterProvider() {
+    init();
+  }
+
+  void init() {
+    print('--- init');
+    _count++;
+  }
+
   void increment() {
     print('--- increment');
     _count++;

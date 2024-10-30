@@ -24,6 +24,7 @@ class MyApp extends StatelessWidget {
     print('--- MyApp');
 
     final prv = Provider.of<CounterProvider>(context, listen: true);
+    print('---MyApp---build---${prv.count}');
 
     return MaterialApp(
         home: Scaffold(
@@ -47,25 +48,24 @@ class CounterProvider with ChangeNotifier {
   int get count => _count;
 
   CounterProvider() {
-    init();
+    getCount();
   }
 
-  void init() {
+  void getCount() {
     increase().whenComplete(() {
-      print(_count);
+      print('---CounterProvider---getCount---${_count}');
+      notify();
     });
   }
 
-  void getCount() async {
-    increase();
-    this.notify();
-  }
-
   Future increase() async {
+    await Future.delayed(Duration(seconds: 2));
     _count = _count + 1;
+    print('---CounterProvider---increase---${_count}');
   }
 
   void notify() {
+    print('---CounterProvider---notify---${_count}');
     notifyListeners();
   }
 }

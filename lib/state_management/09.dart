@@ -21,8 +21,6 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    print('--- MyApp');
-
     final prv = Provider.of<CounterProvider>(context, listen: true);
     print('---MyApp---build---${prv.count}');
 
@@ -44,8 +42,8 @@ class MyApp extends StatelessWidget {
 
 //----------------------------------------------- [ Provider ]
 class CounterProvider with ChangeNotifier {
-  int _count = 0;
-  int get count => _count;
+  var _count = 0;
+  get count => _count;
 
   CounterProvider() {
     getCount();
@@ -54,7 +52,7 @@ class CounterProvider with ChangeNotifier {
   void getCount() {
     increase().whenComplete(() {
       print('---CounterProvider---getCount---${_count}');
-      notify();
+      notifyListeners();
     });
   }
 
@@ -62,10 +60,5 @@ class CounterProvider with ChangeNotifier {
     await Future.delayed(Duration(seconds: 2));
     _count = _count + 1;
     print('---CounterProvider---increase---${_count}');
-  }
-
-  void notify() {
-    print('---CounterProvider---notify---${_count}');
-    notifyListeners();
   }
 }

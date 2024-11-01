@@ -11,11 +11,11 @@ import 'package:provider/provider.dart';
 
 //----------------------------------------------- [ Main ]
 void main() {
-  //-------------------------- [Variable]
+  //--------------------[Variable]
   OSLists os = OSLists.mac;
   DeviceLists device = DeviceLists.desktop;
 
-  //-------------------------- [Platform]
+  //--------------------[Platform]
   if (Platform.isMacOS) {
     os = OSLists.mac;
   } else if (Platform.isLinux) {
@@ -30,6 +30,7 @@ void main() {
     os = OSLists.android;
   }
 
+  //--------------------[RunApp]
   runApp(
     MultiProvider(
       providers: [

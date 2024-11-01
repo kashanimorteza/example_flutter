@@ -55,23 +55,20 @@ class Provider_Setting with ChangeNotifier {
 
 //----------------------------------------------- [ Provider_Screen ]
 class Provider_Screen with ChangeNotifier {
-  bool isMobile = false;
-  bool isTablet = false;
-  bool isDesktop = false;
+  //----------[Fields]
+  DeviceLists _device = DeviceLists.desktop;
 
+  //----------[Get]
+  DeviceLists get device => _device;
+
+  //----------[Method]
   void updateScreenSize(double width) {
     if (width < 600) {
-      isMobile = true;
-      isTablet = false;
-      isDesktop = false;
+      _device = DeviceLists.mobile;
     } else if (width >= 600 && width < 1200) {
-      isMobile = false;
-      isTablet = true;
-      isDesktop = false;
+      _device = DeviceLists.tablet;
     } else {
-      isMobile = false;
-      isTablet = false;
-      isDesktop = true;
+      _device = DeviceLists.desktop;
     }
     notifyListeners();
   }

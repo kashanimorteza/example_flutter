@@ -62,13 +62,14 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    final prv_setting = Provider.of<Provider_Setting>(context, listen: false);
+    final prv_setting = Provider.of<Provider_Setting>(context, listen: true);
     final prv_screen = Provider.of<Provider_Screen>(context, listen: false);
 
     return LayoutBuilder(
       builder: (context, constraints) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           prv_screen.updateScreenSize(constraints.maxWidth);
+          prv_setting.device = prv_screen.device;
         });
 
         return Scaffold(
@@ -79,18 +80,6 @@ class _MyHomePageState extends State<MyHomePage> {
           body: Center(
             child: Column(
               children: [
-                Consumer<Provider_Screen>(
-                  builder: (context, screenSizeProvider, child) {
-                    String deviceType = screenSizeProvider.isMobile
-                        ? 'Mobile'
-                        : screenSizeProvider.isTablet
-                            ? 'Tablet'
-                            : 'Desktop';
-                    return Center(
-                      child: Text('Current Device Type: $deviceType'),
-                    );
-                  },
-                ),
                 ElevatedButton(
                   onPressed: () {
                     prv_setting.os = OSLists.mac;

@@ -8,7 +8,7 @@ enum DeviceLists { desktop, tablet, mobile }
 enum SettingLists { theme, drawer }
 
 //-------------------------- [Map]
-Map<dynamic, dynamic> setting_params = {
+Map<dynamic, dynamic> setting = {
   //----------MAC
   OSLists.mac: {
     DeviceLists.desktop: {

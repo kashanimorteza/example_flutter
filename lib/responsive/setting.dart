@@ -36,8 +36,8 @@ class Setting {
   Setting({required OSLists os, required DeviceLists device}) {
     this._os = os;
     this._device = device;
-    this._theme = setting_params[_os][_device][SettingLists.theme];
-    this._drawer = setting_params[_os][_device][SettingLists.drawer];
+    this._theme = setting[_os][_device][SettingLists.theme];
+    this._drawer = setting[_os][_device][SettingLists.drawer];
   }
 
   @override

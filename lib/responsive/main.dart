@@ -1,5 +1,5 @@
 import 'consts.dart';
-import 'settings.dart';
+import 'setting.dart';
 
 void main() {
   Setting c1 = Setting(os: OSLists.linux, device: DeviceLists.mobile);

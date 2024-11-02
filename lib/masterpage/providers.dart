@@ -31,7 +31,6 @@ class Provider_Setting with ChangeNotifier {
   set drawer(value) {
     _drawer = value;
     update();
-    print('--- provider notift');
     notifyListeners();
   }
 
@@ -71,7 +70,6 @@ class Provider_Screen with ChangeNotifier {
     } else {
       _device = DeviceLists.desktop;
     }
-    print('--- screen notify');
     notifyListeners();
   }
 }

@@ -11,6 +11,8 @@ import 'package:provider/provider.dart';
 
 //----------------------------------------------- [ Main ]
 void main() {
+  print('--- main');
+
   //--------------------[Variable]
   OSLists os = OSLists.mac;
   DeviceLists device = DeviceLists.desktop;
@@ -47,6 +49,7 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    print('--- myapp');
     return MaterialApp(
       home: MyHomePage(),
     );
@@ -63,12 +66,14 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    final prv_setting = Provider.of<Provider_Setting>(context, listen: true);
+    print('--- MyHomePage');
+    final prv_setting = Provider.of<Provider_Setting>(context, listen: false);
     final prv_screen = Provider.of<Provider_Screen>(context, listen: false);
 
     return LayoutBuilder(
       builder: (context, constraints) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
+          print('--- layoutBuilder');
           prv_screen.updateScreenSize(constraints.maxWidth);
           prv_setting.device = prv_screen.device;
         });
@@ -86,30 +91,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     prv_setting.os = OSLists.mac;
                   },
                   child: Text('Mac'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    prv_setting.os = OSLists.linux;
-                  },
-                  child: Text('Linux'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    prv_setting.os = OSLists.windows;
-                  },
-                  child: Text('Windows'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    prv_setting.os = OSLists.chrome;
-                  },
-                  child: Text('Chrome'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    prv_setting.os = OSLists.web;
-                  },
-                  child: Text('Web'),
                 ),
               ],
             ),

@@ -1,75 +1,29 @@
 import 'package:flutter/material.dart';
 import 'consts.dart';
 
-//----------------------------------------------- [ Provider_Setting ]
-class Provider_Setting with ChangeNotifier {
+//----------------------------------------------- [ Provider ]
+class Provider_Page with ChangeNotifier {
 //----------[Fields]
-  OSLists _os = OSLists.mac;
-  DeviceLists _device = DeviceLists.desktop;
-  var _drawer;
-  String _theme = 't1';
+  const_page_list _page = const_page_list.dashboard;
+  var _title = const_page[const_page_list.dashboard]['title'];
+  var _cls = const_page[const_page_list.dashboard]['cls'];
 
 //----------[Get]
-  OSLists get os => _os;
-  DeviceLists get device => _device;
-  get drawer => _drawer;
-  String get theme => _theme;
-
-//----------[Set]
-  set os(OSLists value) {
-    _os = value;
-    update();
-    notifyListeners();
-  }
-
-  set device(DeviceLists value) {
-    _device = value;
-    update();
-    notifyListeners();
-  }
-
-  set drawer(value) {
-    _drawer = value;
-    update();
-    notifyListeners();
-  }
-
-  set theme(String value) {
-    _theme = value;
-    update();
-    notifyListeners();
-  }
+  get page => _page;
+  get title => _title;
+  get cls => _cls;
 
 //----------[Method]
-  Provider_Setting({required OSLists os, required DeviceLists device}) {
-    this._os = os;
-    this._device = device;
-    update();
+  Provider_Page() {
+    print('--- Provider_Page');
+    update(_page);
   }
 
-  void update() {
-    this._theme = setting[_os][_device][SettingLists.theme];
-    this._drawer = setting[_os][_device][SettingLists.drawer];
-  }
-}
-
-//----------------------------------------------- [ Provider_Screen ]
-class Provider_Screen with ChangeNotifier {
-  //----------[Fields]
-  DeviceLists _device = DeviceLists.desktop;
-
-  //----------[Get]
-  DeviceLists get device => _device;
-
-  //----------[Method]
-  void updateScreenSize(double width) {
-    if (width < 600) {
-      _device = DeviceLists.mobile;
-    } else if (width >= 600 && width < 1200) {
-      _device = DeviceLists.tablet;
-    } else {
-      _device = DeviceLists.desktop;
-    }
+  void update(const_page_list page) {
+    print('--- Provider_Page.update()');
+    _page = page;
+    _title = const_page[_page]['title'];
+    _cls = const_page[_page]['cls'];
     notifyListeners();
   }
 }

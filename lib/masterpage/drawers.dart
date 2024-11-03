@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'providers.dart';
+import 'consts.dart';
 
-//----------------------------------------------- [ Description ]
-/*
-
-*/
-
-//----------------------------------------------- [ DesktopDrawer ]
-class DesktopDrawer extends StatelessWidget {
+//----------------------------------------------- [ Drawer ]
+class MyDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final prv_page = Provider.of<Provider_Page>(context, listen: false);
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -18,7 +17,7 @@ class DesktopDrawer extends StatelessWidget {
               color: Colors.blue,
             ),
             child: Text(
-              'Desktop',
+              'Masterpage',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 24,
@@ -27,96 +26,16 @@ class DesktopDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.settings),
-            title: Text('Mac'),
+            title: Text(const_page[const_page_list.dashboard]['title']),
             onTap: () {
-              Navigator.pushNamed(context, '/mac');
+              prv_page.update(const_page_list.dashboard);
             },
           ),
           ListTile(
             leading: Icon(Icons.settings),
-            title: Text('Desktop'),
+            title: Text(const_page[const_page_list.config]['title']),
             onTap: () {
-              Navigator.pushNamed(context, '/desktop');
-            },
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-//----------------------------------------------- [ TabletDrawer ]
-class TabletDrawer extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Drawer(
-      child: ListView(
-        padding: EdgeInsets.zero,
-        children: <Widget>[
-          DrawerHeader(
-            decoration: BoxDecoration(
-              color: Colors.green,
-            ),
-            child: Text(
-              'Tablet',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 24,
-              ),
-            ),
-          ),
-          ListTile(
-            leading: Icon(Icons.settings),
-            title: Text('Mac'),
-            onTap: () {
-              Navigator.pushNamed(context, '/mac');
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.settings),
-            title: Text('Tablet'),
-            onTap: () {
-              Navigator.pushNamed(context, '/tablet');
-            },
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-//----------------------------------------------- [ MobileDrawer ]
-class MobileDrawer extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Drawer(
-      child: ListView(
-        padding: EdgeInsets.zero,
-        children: <Widget>[
-          DrawerHeader(
-            decoration: BoxDecoration(
-              color: Colors.red,
-            ),
-            child: Text(
-              'Mobile',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 24,
-              ),
-            ),
-          ),
-          ListTile(
-            leading: Icon(Icons.settings),
-            title: Text('Mac'),
-            onTap: () {
-              Navigator.pushNamed(context, '/mac');
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.settings),
-            title: Text('Mobile'),
-            onTap: () {
-              Navigator.pushNamed(context, '/mobile');
+              prv_page.update(const_page_list.config);
             },
           ),
         ],

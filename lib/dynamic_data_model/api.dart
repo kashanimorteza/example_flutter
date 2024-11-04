@@ -1,6 +1,13 @@
+//----------------------------------------------- [ Description ]
+/*
+  This class get json data from api
+*/
+
+//----------------------------------------------- [ Import ]
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+//----------------------------------------------- [ MyApi ]
 class MyApi {
   String url;
 
@@ -24,7 +31,7 @@ class MyApi {
     }
   }
 
-  Future getFields(String model_name) async {
+  Future getSchema(String model_name) async {
     var schema = await getDataFromApi('schema');
     var model = schema['components']['schemas'][model_name]['properties'];
     return model;

@@ -4,19 +4,18 @@
 */
 
 //----------------------------------------------- [ Import ]
+import 'package:app_state_manager/dynamic_data_model/tools.dart';
+import 'package:flutter/material.dart';
 import 'api.dart';
 import 'consts.dart';
 
 //----------------------------------------------- [ Model_Xray ]
 class Model_Xray {
   //----------[Fields]
-  String _url;
+  var _url;
   var _api;
-  String _model = const_model[const_model_list.xray_server]['api'];
+  var _model = const_model[const_model_list.xray_server]['api'];
   var _schema;
-  var _items;
-  var _view;
-  var _edit;
 
 //----------[Get]
 
@@ -26,7 +25,6 @@ class Model_Xray {
   Model_Xray(this._url) {
     _api = new MyApi(_url);
     getSchema();
-    //generate_items();
   }
 
   getSchema() {
@@ -40,14 +38,33 @@ class Model_Xray {
         .whenComplete(() {});
   }
 
-  generate_items() {
-    for (var key in _schema.keys) {
-      print('Key: $key');
-      print('Value: ${_schema[key]}');
-      print('------------');
-    }
+  generate_view() {
+    return new Create_Table();
   }
 
-  generate_view() {}
-  generate_edit() {}
+  generate_edit() {
+    return new Create_Table();
+  }
+}
+
+//----------------------------------------------- [ Create_Table ]
+class Create_Table extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Table(
+        columnWidths: {
+          0: FlexColumnWidth(1),
+          1: FlexColumnWidth(2),
+        },
+        border: TableBorder.all(color: Colors.black),
+        children: [
+          Create_Table_ROW('Version', 'Enter version'),
+          Create_Table_ROW('Config URL', 'Enter config URL'),
+          Create_Table_ROW('API Host', 'Enter API host'),
+          Create_Table_ROW('API Port', 'Enter API port'),
+        ],
+      ),
+    );
+  }
 }

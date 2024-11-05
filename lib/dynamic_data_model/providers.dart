@@ -1,29 +1,40 @@
-// import 'package:flutter/material.dart';
-// import 'consts.dart';
+//----------------------------------------------- [ Description ]
+/*
+  This class get data from api
+*/
 
-// //----------------------------------------------- [ Provider ]
-// class Provider_Page with ChangeNotifier {
-// //----------[Fields]
-//   const_page_list _page = const_page_list.dashboard;
-//   var _title = const_page[const_page_list.dashboard]['title'];
-//   var _cls = const_page[const_page_list.dashboard]['cls'];
+//----------------------------------------------- [ Import ]
+import 'package:flutter/material.dart';
+import 'models.dart';
 
-// //----------[Get]
-//   get page => _page;
-//   get title => _title;
-//   get cls => _cls;
+//----------------------------------------------- [ Provider ]
+class Provider_Xray with ChangeNotifier {
+//----------[Fields]
+  var _url;
+  var _model;
+  var _view;
+  var _edit;
 
-// //----------[Method]
-//   Provider_Page() {
-//     print('--- Provider_Page');
-//     update(_page);
-//   }
+//----------[Get]
+  get view => _view;
+  get edit => _edit;
 
-//   void update(const_page_list page) {
-//     print('--- Provider_Page.update()');
-//     _page = page;
-//     _title = const_page[_page]['title'];
-//     _cls = const_page[_page]['cls'];
-//     notifyListeners();
-//   }
-// }
+//----------[Method]
+  Provider_Xray(this._url) {
+    print('--- Provider_Xray');
+    _model = new Model_Xray(_url);
+    Get_View();
+  }
+
+  void Get_View() {
+    print('--- Get_View');
+    _view = _model.generate_view();
+    notifyListeners();
+  }
+
+  void Get_Edit() {
+    print('--- Get_Edit');
+    _edit = _model.generate_edit();
+    notifyListeners();
+  }
+}

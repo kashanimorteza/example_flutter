@@ -8,20 +8,17 @@
             "name": "example_flutter",
             "request": "launch",
             "type": "dart",
-            "program": "lib/dynamic_data_model/main.dart"
         },
         {
             "name": "example_flutter (profile mode)",
             "request": "launch",
             "type": "dart",
-            "program": "lib/dynamic_data_model/main.dart",
             "flutterMode": "profile"
         },
         {
             "name": "example_flutter (release mode)",
             "request": "launch",
             "type": "dart",
-            "program": "lib/dynamic_data_model/main.dart",
             "flutterMode": "release"
         }
     ]

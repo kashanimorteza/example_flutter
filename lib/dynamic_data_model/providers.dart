@@ -23,18 +23,17 @@ class Provider_Xray with ChangeNotifier {
   Provider_Xray(this._url) {
     print('--- Provider_Xray');
     _model = new Model_Xray(_url);
-    _view = _model.generate_view();
+    Get_View();
   }
 
   void Get_View() {
-    print('--- Get_View');
-    _view = _model.generate_view();
-    notifyListeners();
-  }
-
-  void Get_Edit() {
-    print('--- Get_Edit');
-    _edit = _model.generate_edit();
-    notifyListeners();
+    print('--- Generate_View');
+    _model.generate_view().then((data) {
+      _view = data;
+    }).catchError((error) {
+      print('error');
+    }).whenComplete(() {
+      notifyListeners();
+    });
   }
 }

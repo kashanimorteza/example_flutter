@@ -31,7 +31,7 @@ class Provider_Xray with ChangeNotifier {
     notifyListeners();
   }
 
-  void Get_Edit() {
+  void Get_Edit() async {
     print('--- Get_Edit');
     _edit = _model.generate_edit();
     notifyListeners();

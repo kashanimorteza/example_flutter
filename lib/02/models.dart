@@ -26,10 +26,21 @@ class Model_Xray {
   }
 
   getSchema() async {
-    _schema = _api.getSchema(_model);
+    _schema = await _api.getSchema(_model);
   }
 
   generate_view() async {
-    return _schema;
+    await getSchema();
+    print(_schema);
+    return Container(
+      padding: EdgeInsets.all(16.0),
+      child: Text(
+        'aaaaaa',
+        style: TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
   }
 }

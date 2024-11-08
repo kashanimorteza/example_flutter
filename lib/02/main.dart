@@ -5,8 +5,8 @@
 
 //----------------------------------------------- [ Import ]
 import 'package:flutter/material.dart';
-import 'package:app_state_manager/dynamic_data_model/providers.dart';
 import 'package:provider/provider.dart';
+import 'providers.dart';
 
 //----------------------------------------------- [ Main ]
 void main() {
@@ -45,9 +45,14 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     print('--- MyHomePageState');
-    var v = new Provider_Xray('_url');
     final prv_xray = Provider.of<Provider_Xray>(context, listen: true);
-    var a = prv_xray.view;
+    var b = prv_xray.Get_View();
+
+    if (prv_xray.view == null) {
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    }
     return prv_xray.view;
     // return Scaffold(
     //   body: Padding(

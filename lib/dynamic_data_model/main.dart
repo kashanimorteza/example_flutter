@@ -46,35 +46,11 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     print('--- MyHomePageState');
     final prv_xray = Provider.of<Provider_Xray>(context, listen: true);
+    if (prv_xray.view == null) {
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    }
     return prv_xray.view;
-    // return Scaffold(
-    //   body: Padding(
-    //     padding: const EdgeInsets.all(16.0),
-    //     child: Table(
-    //       border: TableBorder.all(), // Adds border to the table
-    //       children: [
-    //         TableRow(
-    //           decoration: BoxDecoration(color: Colors.grey[300]),
-    //           children: [
-    //             Padding(
-    //               padding: const EdgeInsets.all(8.0),
-    //               child: Text(
-    //                 "Title",
-    //                 style: TextStyle(fontWeight: FontWeight.bold),
-    //               ),
-    //             ),
-    //             Padding(
-    //               padding: const EdgeInsets.all(8.0),
-    //               child: Text(
-    //                 "Value",
-    //                 style: TextStyle(fontWeight: FontWeight.bold),
-    //               ),
-    //             ),
-    //           ],
-    //         ),
-    //       ],
-    //     ),
-    //   ),
-    // );
   }
 }

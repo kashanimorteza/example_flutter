@@ -25,25 +25,11 @@ class Model_Xray {
     _api = new MyApi(_url);
   }
 
-  getSchema() {
-    _api
-        .getSchema(_model)
-        .then((data) {
-          _schema = data;
-          print(_schema);
-        })
-        .catchError((error) {})
-        .whenComplete(() {});
+  getSchema() async {
+    _schema = _api.getSchema(_model);
   }
 
-  generate_view() {
-    _api
-        .getSchema(_model)
-        .then((data) {
-          _schema = data;
-          print(_schema);
-        })
-        .catchError((error) {})
-        .whenComplete(() {});
+  generate_view() async {
+    return _schema;
   }
 }

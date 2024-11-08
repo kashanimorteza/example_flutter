@@ -45,7 +45,9 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     print('--- MyHomePageState');
+    var v = new Provider_Xray('_url');
     final prv_xray = Provider.of<Provider_Xray>(context, listen: true);
+    var a = prv_xray.view;
     return prv_xray.view;
     // return Scaffold(
     //   body: Padding(

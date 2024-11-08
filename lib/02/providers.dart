@@ -23,12 +23,11 @@ class Provider_Xray with ChangeNotifier {
   Provider_Xray(this._url) {
     print('--- Provider_Xray');
     _model = new Model_Xray(_url);
-    _view = _model.generate_view();
   }
 
-  void Get_View() {
+  void Get_View() async {
     print('--- Get_View');
-    _view = _model.generate_view();
+    _view = await _model.generate_view();
     notifyListeners();
   }
 

@@ -5,7 +5,7 @@
 
 //----------------------------------------------- [ Import ]
 import 'package:flutter/material.dart';
-import 'package:app_state_manager/dynamic_data_model/providers.dart';
+import 'package:app_state_manager/api_view_edit/providers.dart';
 import 'package:provider/provider.dart';
 
 //----------------------------------------------- [ Main ]

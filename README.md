@@ -97,6 +97,16 @@
 	04 : Api with asynchronous and class
 
 
+
+dynamic_data_model
+
+
+<!---------------------------------------[Problem]-->
+<br><br><br>
+
+## Problem
+	dynamic_data_model : chera zamani ke dokmeye edit ro mizanim , dar Model_Xray:edit dar ghesate _data = await _api.getItems(_model); rad nemishe ? vaymise ? dar sorati ke awale barname azash rad mishe va ma halate loading neshon midim
+
 <!---------------------------------------[Question]-->
 <br><br><br>
 

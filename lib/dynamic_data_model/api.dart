@@ -13,21 +13,36 @@ class MyApi {
 
   MyApi(this.url);
 
-  Future<Map<String, dynamic>> getDataFromApi(String route) async {
-    url = '${this.url}/${route}';
-    final response = await http.get(Uri.parse(url));
-    Map<String, dynamic> data = jsonDecode(response.body);
-    return data;
-  }
+  // Future<Map<String, dynamic>> getDataFromApi(String route) async {
+  //   url = '${this.url}/${route}';
+  //   final response = await http.get(Uri.parse(url));
+  //   Map<String, dynamic> data = jsonDecode(response.body);
+  //   return data;
+  // }
 
-  Future getSchema(String model_name) async {
-    var schema = await getDataFromApi('schema');
-    var model = schema['components']['schemas'][model_name]['properties'];
-    return model;
-  }
+  // Future getSchema(String model_name) async {
+  //   var schema = await getDataFromApi('schema');
+  //   var model = schema['components']['schemas'][model_name]['properties'];
+  //   return model;
+  // }
+
+  // Future getItems(String model_name) async {
+  //   var data = await getDataFromApi('${model_name}/items');
+  //   return data;
+  // }
 
   Future getItems(String model_name) async {
-    var data = await getDataFromApi('${model_name}/items');
+    print('--- MyApi : getItems : ${model_name}');
+
+    Map<String, dynamic> data = {
+      "version": "1.8.24",
+      "config_url": "/usr/local/etc/xray",
+      "api_host": "127.0.0.1",
+      "api_port": 10085,
+    };
+
+    await Future.delayed(Duration(seconds: 5));
+
     return data;
   }
 }

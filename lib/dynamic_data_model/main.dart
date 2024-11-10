@@ -15,7 +15,7 @@ void main() {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => Provider_Xray(url)),
+        ChangeNotifierProvider(create: (context) => Provider_Xray(url: url)),
       ],
       child: MyApp(),
     ),
@@ -26,7 +26,7 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    print('--- MyApp');
+    print('--- MyApp : build');
     return MaterialApp(
       home: MyHomePage(),
     );
@@ -44,8 +44,10 @@ class _MyHomePageState extends State<MyHomePage> {
   int value = 0;
   @override
   Widget build(BuildContext context) {
-    print('--- MyHomePageState');
+    print('--- _MyHomePageState : build');
     final prv_xray = Provider.of<Provider_Xray>(context, listen: true);
+    prv_xray.context ??= context;
+
     if (prv_xray.view == null) {
       return Center(
         child: CircularProgressIndicator(),

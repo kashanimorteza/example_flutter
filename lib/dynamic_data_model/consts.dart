@@ -6,6 +6,8 @@
 //----------------------------------------------- [ Const ]
 enum const_model_list { xray_server }
 
+enum const_page_mode { view, edit }
+
 //----------------------------------------------- [ Map ]
 Map<dynamic, dynamic> const_model = {
   //----------xray_server

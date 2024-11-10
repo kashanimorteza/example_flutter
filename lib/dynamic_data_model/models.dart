@@ -5,119 +5,188 @@
 
 //----------------------------------------------- [ Import ]
 import 'package:flutter/material.dart';
+import 'package:app_state_manager/dynamic_data_model/providers.dart';
+import 'package:provider/provider.dart';
 import 'api.dart';
 import 'consts.dart';
+import 'tools.dart';
+
+//----------------------------------------------- [ Model ]
+class Model {
+  String version;
+  String config_url;
+  String api_host;
+  int api_port;
+
+  Model({
+    required this.version,
+    required this.config_url,
+    required this.api_host,
+    required this.api_port,
+  });
+}
 
 //----------------------------------------------- [ Model_Xray ]
 class Model_Xray {
   //----------[Fields]
+  var _context;
   var _model = const_model[const_model_list.xray_server]['api'];
+  String _title = const_model[const_model_list.xray_server]['title'];
   var _url;
   var _api;
-
   var _data;
 
 //----------[Get]
 
 //----------[Set]
 
-//----------[Method]
-  Model_Xray(this._url) {
+//----------[Contracture]
+  Model_Xray({
+    required context,
+    required url,
+  }) {
+    print('--- Model_Xray : Contractor');
+    _context = context;
+    _url = url;
     _api = new MyApi(_url);
   }
 
-  Future generate_view() async {
+//----------[View]
+  Future<Widget> view() async {
+    print('--- Model_Xray : view');
+
+    AppBar My_AppBar = generate_AppBar(_title, Colors.blue, Colors.white);
     _data = await _api.getItems(_model);
 
-    for (var entry in _data.entries) {
-      print('Key: ${entry.key}, Value: ${entry.value}');
-    }
-
-    var data = Scaffold(
+    var obj = Scaffold(
+      appBar: My_AppBar,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Table(
-          border: TableBorder.all(), // Adds border to the table
+        child: Column(
           children: [
-            TableRow(
-              decoration: BoxDecoration(color: Colors.grey[300]),
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    "Title",
+            DataTable(
+              columns: [
+                DataColumn(
+                  label: Text(
+                    'Field',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    "Value",
+                DataColumn(
+                  label: Text(
+                    'Value',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
               ],
+              rows: _buildDataRows(_data),
             ),
-            for (var item in _data.entries)
-              TableRow(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(item["Key"] ?? ""),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(item["Value"] ?? ""),
-                  ),
-                ],
-              ),
+            ElevatedButton(
+              onPressed: () {
+                var prv_xray = Provider.of<Provider_Xray>(_context, listen: false);
+                prv_xray.mode = const_page_mode.edit;
+              },
+              child: Text('Edit'),
+            ),
           ],
         ),
       ),
     );
-
-    return data;
+    return obj;
   }
 
-  List<DataRow> _generateRow() {
-    List<DataRow> rows = [];
+//----------[View]
+  Future<Widget> edit() async {
+    print('--- Model_Xray : edit');
 
-    for (var entry in _data.entries) {
-      final key = entry.key;
-      final value = entry.value;
+    _data = await _api.getItems(_model);
 
-      List<DataCell> cells = [
-        DataCell(Text(key)),
-      ];
+    TextEditingController _version_Controller = TextEditingController(text: _data['version']);
+    TextEditingController _config_url_Controller = TextEditingController(text: _data['config_url']);
+    TextEditingController _api_host_Controller = TextEditingController(text: _data['api_host']);
+    TextEditingController _api_port_Controller = TextEditingController(text: _data['api_port'].toString());
 
-      for (var subEntry in value.entries) {
-        cells.add(DataCell(Text(subEntry.value.toString())));
-      }
+    AppBar My_AppBar = generate_AppBar(_title, Colors.blue, Colors.white);
 
-      rows.add(DataRow(cells: cells));
-    }
-
-    return rows;
+    var obj = Scaffold(
+      appBar: My_AppBar,
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildTextField('version', _version_Controller),
+            SizedBox(height: 10),
+            _buildTextField('config_url', _config_url_Controller),
+            SizedBox(height: 10),
+            _buildTextField('api_host', _api_host_Controller),
+            SizedBox(height: 10),
+            _buildTextField('api_port', _api_port_Controller, isNumeric: true),
+            SizedBox(height: 10),
+            ElevatedButton(
+              onPressed: () {
+                var prv_xray = Provider.of<Provider_Xray>(_context, listen: false);
+                prv_xray.mode = const_page_mode.view;
+              },
+              child: Text('Save'),
+            ),
+          ],
+        ),
+      ),
+    );
+    return obj;
   }
 
-  List<DataColumn> _generateColumn() {
-    List<DataColumn> rows = [];
-
-    for (var entry in _data.entries) {
-      final key = entry.key;
-      final value = entry.value;
-
-      List<DataCell> cells = [
-        DataCell(Text(key)),
-      ];
-
-      for (var subEntry in value.entries) {
-        cells.add(DataCell(Text(subEntry.value.toString())));
-      }
-
-      rows.add(DataRow(cells: cells));
-    }
-
-    return rows;
+  Widget _buildTextField(String label, TextEditingController controller, {bool isNumeric = false}) {
+    return TextField(
+      controller: controller,
+      decoration: InputDecoration(
+        labelText: label,
+        border: OutlineInputBorder(),
+      ),
+      keyboardType: isNumeric ? TextInputType.number : TextInputType.text,
+    );
   }
 }
+
+List<DataRow> _buildDataRows(Map<String, dynamic> data) {
+  return data.entries.map((entry) {
+    return DataRow(
+      cells: [
+        DataCell(Text(entry.key)),
+        DataCell(Text(entry.value.toString())),
+      ],
+    );
+  }).toList();
+}
+
+
+
+
+
+// //----------[generate_view]
+//   Future<Scaffold> edit() async {
+//     _data = await _api.getItems(_model);
+//     AppBar My_AppBar = generate_AppBar(_title, Colors.blue, Colors.white);
+//     ListView My_ListView = generate_ListView(_data);
+//     Scaffold obj = Scaffold(
+//       appBar: My_AppBar,
+//       body: SingleChildScrollView(
+//         child: Padding(
+//           padding: const EdgeInsets.all(16.0),
+//           child: Column(
+//             crossAxisAlignment: CrossAxisAlignment.start,
+//             children: [
+//               Container(
+//                   decoration: BoxDecoration(
+//                     border: Border.all(color: Colors.grey.shade300),
+//                     borderRadius: BorderRadius.circular(8),
+//                   ),
+//                   child: My_ListView),
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//     return obj;
+//   }

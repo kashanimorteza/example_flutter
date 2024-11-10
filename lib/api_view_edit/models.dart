@@ -159,34 +159,3 @@ List<DataRow> _buildDataRows(Map<String, dynamic> data) {
     );
   }).toList();
 }
-
-
-
-
-
-// //----------[generate_view]
-//   Future<Scaffold> edit() async {
-//     _data = await _api.getItems(_model);
-//     AppBar My_AppBar = generate_AppBar(_title, Colors.blue, Colors.white);
-//     ListView My_ListView = generate_ListView(_data);
-//     Scaffold obj = Scaffold(
-//       appBar: My_AppBar,
-//       body: SingleChildScrollView(
-//         child: Padding(
-//           padding: const EdgeInsets.all(16.0),
-//           child: Column(
-//             crossAxisAlignment: CrossAxisAlignment.start,
-//             children: [
-//               Container(
-//                   decoration: BoxDecoration(
-//                     border: Border.all(color: Colors.grey.shade300),
-//                     borderRadius: BorderRadius.circular(8),
-//                   ),
-//                   child: My_ListView),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//     return obj;
-//   }

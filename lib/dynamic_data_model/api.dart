@@ -41,7 +41,7 @@ class MyApi {
       "api_port": 10085,
     };
 
-    await Future.delayed(Duration(seconds: 5));
+    await Future.delayed(Duration(seconds: 2));
 
     return data;
   }

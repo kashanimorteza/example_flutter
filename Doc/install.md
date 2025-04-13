@@ -26,32 +26,35 @@
 	java -version
 
 #### Android-SDK
-	cd ~/Downloads/
+	
 	Download : https://developer.android.com/studio
-	unzip ~/Downloads/commandlinetools-mac-11076708_latest.zip -d /Volumes/Data/android-sdk
+	cp -fr ~/Downloads/commandlinetools-mac-13114758_latest.zip /Volumes/data/develop/
+	cd /Volumes/data/develop
+	unzip ./commandlinetools-mac-13114758_latest.zip -d ./android-sdk
 
-	mkdir -p /Volumes/Data/android-sdk/cmdline-tools/latest
-	cp -fr /Volumes/Data/android-sdk/cmdline-tools/* /Volumes/Data/android-sdk/cmdline-tools/latest
-	rm -fr /Volumes/Data/android-sdk/cmdline-tools/latest/latest
+	mkdir -p ./android-sdk/cmdline-tools/latest
+	cp -fr ./android-sdk/cmdline-tools/* ./android-sdk/cmdline-tools/latest
+	rm -fr ./android-sdk/cmdline-tools/latest/latest
 
-	export ANDROID_HOME=/Volumes/Data/android-sdk
+	export ANDROID_HOME=/Volumes/data/develop/android-sdk
 	export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin
 	export PATH=$PATH:$ANDROID_HOME/platform-tools
 	export PATH=$PATH:$ANDROID_HOME/emulator
 
 	sed -i '' '/export PATH/d' ~/.zshrc
-	echo "export ANDROID_HOME=/Volumes/Data/android-sdk" >> ~/.zshrc
+	echo "export ANDROID_HOME=/Volumes/data/develop/android-sdk" >> ~/.zshrc
 	echo "export PATH=$PATH" >> ~/.zshrc
 
 	sdkmanager "platform-tools" "platforms;android-30" "build-tools;30.0.3"
 
 #### Flutter-SDK
-	cd ~/Downloads/
-	wget https://storage.googleapis.com/flutter_infra_release/releases/stable/macos/flutter_macos_arm64_3.24.3-stable.zip
-	unzip ~/Downloads/flutter_macos_arm64_3.24.3-stable.zip -d /Volumes/Data/flutter-sdk/
+	Download :https://storage.googleapis.com/flutter_infra_release/releases/stable/macos/flutter_macos_arm64_3.29.2-stable.zip
+	cp -fr ~/Downloads/flutter_macos_arm64_3.29.2-stable.zip /Volumes/data/develop/
+	cd /Volumes/data/develop
+	unzip ./flutter_macos_arm64_3.29.2-stable.zip -d ./flutter-sdk
 	
 	sed -i '' '/export PATH/d' ~/.zshrc
-	export PATH=$PATH:/Volumes/Data/flutter-sdk/flutter/bin
+	export PATH=$PATH:/Volumes/data/develop/flutter-sdk/flutter/bin
 	echo "export PATH=$PATH" >> ~/.zshrc
 	
 	flutter doctor --android-licenses
